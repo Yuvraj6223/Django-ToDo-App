@@ -1,5 +1,6 @@
 # Django-ToDo-App
 A minimal but sleek ToDo application developed with Django, having a clear and interactive interface to organize daily tasks efficiently. Users are able to add, edit, mark as completed, and delete tasks easily — perfect for everyday personal productivity or as a project to learn Django for Django newbies.
+
 🔧 Features
 📆 "My Day" view with current date
 ➕ Add tasks dynamically
