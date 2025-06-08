@@ -102,25 +102,35 @@
       <div class="date" id="date-display"></div>
 
       <div id="task-list">
-        <!-- Tasks will be added here -->
+        {% for task in tasks %}
+          <div class="task">
+            <span>{{ task.task }}</span>
+            <div class="task-buttons">
+              <button class="done-btn">✔ Mark as Done</button>
+              <button class="delete-btn">🗑</button>
+              <button class="edit-btn">✎</button>
+            </div>
+          </div>
+        {% endfor %}
       </div>
-
+      <form action="{% url 'addTask' %}" method="post">
+        {% csrf_token %}
       <div class="input-box">
-        <input type="text" id="task-input" placeholder="Add a task">
-        <button onclick="addTask()">+ Add</button>
+        <input type="text" name="task" id="task-input" placeholder="Add a task">
+        <button type='submit' onclick="addTask()">+ Add</button>
       </div>
+      </form>
     </div>
 
     <div class="right">
       <h3>Completed Tasks</h3>
       <div class="completed-box" id="completed-list">
-        <!-- Completed tasks -->
+        <!-- Completed tasks will appear here -->
       </div>
     </div>
   </main>
 
   <script>
-    // Display today's date
     document.getElementById('date-display').innerText = new Date().toLocaleDateString('en-UK', {
       day: 'numeric', month: 'long', year: 'numeric'
     });
