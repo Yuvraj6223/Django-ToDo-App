@@ -70,6 +70,29 @@
       min-height: 50px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
+    .completed-task-item {
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.completed-task-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+  .undone-btn{
+    margin-left: 5px;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.788);
+      background-color: #9e2e2e;
+  }
+
     .input-box {
       display: flex;
       margin-top: 20px;
@@ -106,9 +129,14 @@
           <div class="task">
             <span>{{ task.task }}</span>
             <div class="task-buttons">
-              <button class="done-btn">✔ Mark as Done</button>
-              <button class="delete-btn">🗑</button>
-              <button class="edit-btn">✎</button>
+              <a href="{% url 'mark_as_done' task.pk %}"><button class="done-btn">✔ Mark as Done</button></a>
+              <form action="{% url 'delete_task' task.pk %}" method="POST" style="display:inline;">
+  {% csrf_token %}
+  <button type="submit" class="delete-btn">🗑</button>
+</form>
+              <a href="{% url 'edit_task' task.pk %}">
+    <button class="edit-btn">✎</button>
+</a>
             </div>
           </div>
         {% endfor %}
@@ -122,12 +150,22 @@
       </form>
     </div>
 
-    <div class="right">
-      <h3>Completed Tasks</h3>
-      <div class="completed-box" id="completed-list">
-        <!-- Completed tasks will appear here -->
+    
+   <div class="right">
+  <h3>Completed Tasks</h3>
+  <div class="completed-box" id="completed-list">
+    {% for task in completed_tasks %}
+      <div class="completed-task-item">
+        <div class="completed-task-content">
+          <span>{{ task.task }}</span>
+          <a href="{% url 'mark_as_undone' task.pk %}">
+            <button class="undone-btn">❌ Mark as Undone</button></a>
+        </div>
       </div>
-    </div>
+    {% endfor %}
+  </div>
+</div>
+
   </main>
 
   <script>
